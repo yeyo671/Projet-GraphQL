@@ -1,3 +1,4 @@
+import CommentForm from "./CommentForm";
 import PostCard from "./PostCard";
 
 const posts = [
@@ -87,6 +88,7 @@ export default function Feed() {
     <>
       <div className="container mx-auto pt-4">
         <div className="flex flex-col gap-4">
+          <CommentForm />
           {posts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
