@@ -4,17 +4,34 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "test",
+    "dev": "node --import ./scripts/register.js --watch src/index.ts",
+    "start": "npm run compile && node ./dist/index.js",
+    "generate": "graphql-codegen",
+    "prisma": "prisma"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@apollo/server": "^4.10.4",
     "@prisma/client": "^5.15.0",
     "apollo-server": "^3.13.0",
+    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "graphql": "^16.8.2",
+    "graphql-codegen": "^0.4.0",
+    "graphql-tag": "^2.12.6",
     "jsonwebtoken": "^9.0.2",
     "prisma": "^5.15.0"
-  }
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/typescript": "^4.0.7",
+    "@graphql-codegen/typescript-resolvers": "^4.1.0",
+    "@types/node": "^20.14.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "type": "module"
 }
