@@ -1,59 +1,72 @@
 import gql from "graphql-tag";
 
 export const typeDefs = gql`
+
   type User {
     id: ID!
-    email: String!
-    name: String!
-    articles: [Article!]!
-    comments: [Comment!]!
-    likes: [Like!]!
+    username: String!
   }
 
-  type Article {
+  type Post {
     id: ID!
-    title: String!
-    content: String!
-    author: User!
-    comments: [Comment!]!
-    likes: [Like!]!
     createdAt: String!
+    content: String!
+    authorId: ID!
+    authorName: String!
+    likes: [User]!
+    comments: [Comment]!
   }
 
   type Comment {
     id: ID!
     content: String!
-    author: User!
-    article: Article!
-    createdAt: String!
-  }
-
-  type Like {
-    id: ID!
-    user: User!
-    article: Article!
-  }
-
-  type Query {
-    me: User
-    articles: [Article!]!
-    article(id: ID!): Article
+    authorId: ID!
+    authorName: String!
+    postId: ID!
   }
 
   type Mutation {
-    signup(email: String!, password: String!, name: String!): AuthPayload
-    login(email: String!, password: String!): AuthPayload
-    createArticle(title: String!, content: String!): Article!
-    updateArticle(id: ID!, title: String, content: String): Article!
-    deleteArticle(id: ID!): Article!
-    createComment(articleId: ID!, content: String!): Comment!
-    deleteComment(id: ID!): Comment!
-    likeArticle(articleId: ID!): Like!
-    unlikeArticle(articleId: ID!): Like!
+    registration(username: String!, password: String!): RegistrationResponse!
+    connection(username: String!, password: String!): ConnectionResponse!
+    createPost(token: String!, content: String!): CreatePostResponse!
+    createComment(token: String!, text: String!, postId: ID!): CreateCommentResponse!
+    likePost(token: String!, postId: ID!): CreatePostResponse!
+    deletePost(token: String!, postId: ID!): CreatePostResponse!
   }
 
-  type AuthPayload {
+  type RegistrationResponse {
+    code: Int!
+    message: String!
+    success: Boolean!
+    user: User
+  }
+
+  type ConnectionResponse {
+    code: Int!
+    message: String!
+    success: Boolean!
     token: String
     user: User
+  }
+
+  type CreatePostResponse {
+    code: Int!
+    message: String!
+    success: Boolean!
+    post: Post
+  }
+
+  type CreateCommentResponse {
+    code: Int!
+    message: String!
+    success: Boolean!
+    post: Post
+    comment: Comment
+  }
+
+    type Query {
+    getUser: [User]!
+    getPosts: [Post]!
+    getPost(postId: ID!): Post!
   }
 `;
