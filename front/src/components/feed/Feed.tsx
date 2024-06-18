@@ -6,7 +6,7 @@ const posts = [
     id: 1,
     user: {
       name: "Dimitri Fiacre",
-      avatar: "path/to/avatar.jpg",
+      avatar: "https://avatar.iran.liara.run/public",
     },
     timestamp: "Il y a 1 heure",
     content: "Overwatch 2 va sortir le 4 octobre 2022, j'ai trop hâte !",
@@ -15,14 +15,14 @@ const posts = [
       {
         user: {
           name: "Marc",
-          avatar: "path/to/avatar2.jpg",
+          avatar: "https://avatar.iran.liara.run/public",
         },
         content: "Quel est ce jeu ?",
       },
       {
         user: {
           name: "Mbappe",
-          avatar: "path/to/avatar3.jpg",
+          avatar: "https://avatar.iran.liara.run/public",
         },
         content: "Overwatch il a changé",
       },
@@ -32,7 +32,7 @@ const posts = [
     id: 2,
     user: {
       name: "Dimitri Fiacre",
-      avatar: "path/to/avatar.jpg",
+      avatar: "https://avatar.iran.liara.run/public",
     },
     timestamp: "Il y a 2 heures",
     content:
