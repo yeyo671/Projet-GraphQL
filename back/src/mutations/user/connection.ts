@@ -1,11 +1,15 @@
 import { comparePassword, createJWT } from "../../modules/auth.js";
 import { MutationResolvers } from "../../types.js";
 
-export const connection: MutationResolvers['connection'] = async (_, { password, username }, { dataSources }) => {
+export const connection: MutationResolvers["connection"] = async (
+  _,
+  { password, username },
+  { dataSources }
+) => {
   if (!username || !password) {
     return {
       code: 400,
-      message: 'Username and password are required',
+      message: "Username and password are required",
       success: false,
       token: null,
     };
@@ -14,9 +18,10 @@ export const connection: MutationResolvers['connection'] = async (_, { password,
   try {
     const user = await dataSources.db.user.findUnique({ where: { username } });
     if (!user) {
+      console.error("User not found:", username);
       return {
         code: 404,
-        message: 'User not found',
+        message: "User not found",
         success: false,
         token: null,
       };
@@ -24,9 +29,12 @@ export const connection: MutationResolvers['connection'] = async (_, { password,
 
     const isValidPassword = await comparePassword(password, user.password);
     if (!isValidPassword) {
+      console.error("Invalid password provided for user:", username);
+      console.error("Provided password:", password || "undefined");
+      console.error("User password:", user.password || "undefined");
       return {
         code: 401,
-        message: 'Invalid password provided',
+        message: "Invalid password provided",
         success: false,
         token: null,
       };
@@ -36,7 +44,7 @@ export const connection: MutationResolvers['connection'] = async (_, { password,
 
     return {
       code: 200,
-      message: 'User has been signed in',
+      message: "User has been signed in",
       success: true,
       token,
       user: {
@@ -45,11 +53,11 @@ export const connection: MutationResolvers['connection'] = async (_, { password,
       },
     };
   } catch (e) {
-    console.error('Error during sign-in:', e);
+    console.error("Error during sign-in:", e);
 
     return {
       code: 500,
-      message: 'Internal server error',
+      message: "Internal server error",
       success: false,
       token: null,
     };
