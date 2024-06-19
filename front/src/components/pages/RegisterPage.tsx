@@ -12,6 +12,9 @@ const RegisterPage = () => {
     try {
       const { data } = await connect({ variables: { username, password } });
       console.log(data);
+      if (data && data.connection && data.connection.token) {
+        localStorage.setItem("token", data.connection.token);
+      }
     } catch (err) {
       // handle error
     }

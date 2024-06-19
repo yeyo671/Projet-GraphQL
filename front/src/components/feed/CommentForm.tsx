@@ -1,6 +1,32 @@
+import { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { CreatePostDocument, GetPostsDocument } from "../../gql/graphql";
+
 const CommentForm = () => {
+  const [comment, setComment] = useState("");
+  const [createComment, { loading, error }] = useMutation(CreatePostDocument, {
+    refetchQueries: [{ query: GetPostsDocument }],
+  });
+
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    if (!comment) return;
+
+    try {
+      await createComment({
+        variables: {
+          content: comment,
+          token: localStorage.getItem("token") ?? "",
+        },
+      });
+      setComment("");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
-    <div className="bg-base-100 rounded-btn p-4">
+    <form onSubmit={handleSubmit} className="bg-base-100 rounded-btn p-4">
       <div className="flex justify-between gap-3">
         <div className="avatar">
           <div className="w-10 rounded-full">
@@ -11,23 +37,20 @@ const CommentForm = () => {
           </div>
         </div>
         <label className="input input-bordered flex flex-grow items-center gap-2">
-          <input type="text" className="grow" placeholder="Search" />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            className="w-4 h-4 opacity-70"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-              clip-rule="evenodd"
-            />
-          </svg>
+          <input
+            type="text"
+            className="grow"
+            placeholder="Write a comment..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
         </label>
-        <button className="btn btn-primary">Publier</button>
+        <button type="submit" className="btn btn-primary" disabled={loading}>
+          {loading ? "Posting..." : "Post"}
+        </button>
       </div>
-    </div>
+      {error && <p>Error: {error.message}</p>}
+    </form>
   );
 };
 
