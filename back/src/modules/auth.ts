@@ -14,6 +14,8 @@ export const createJWT = (user: JWTUser) => {
     process.env.JWT_SECRET as string
   );
 
+  console.log("Token created:", token);
+
   return token;
 };
 
