@@ -8,40 +8,32 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  email    String    @unique
-  password String
-  name     String
-  Article  Article[]
-  comments Comment[]
-  Like     Like[]
+  id            String    @id @unique @default(cuid())
+  username      String    @unique
+  password      String
+  authoredPosts Post[]    @relation("AuthorToPost")
+  likedPosts    Post[]    @relation("LikesToPost")
+  comments      Comment[]
 }
 
 model Comment {
-  id        Int      @id @default(autoincrement())
-  content   String
-  authorId  Int
-  articleId Int
-  createdAt DateTime @default(now())
-  Article   Article  @relation(fields: [articleId], references: [id])
-  author    User     @relation(fields: [authorId], references: [id])
+  id         String   @id @unique @default(cuid())
+  content    String
+  createdAt  DateTime @default(now())
+  authorId   String
+  authorName String
+  author     User     @relation(fields: [authorId], references: [id])
+  postId     String
+  post       Post     @relation(fields: [postId], references: [id])
 }
 
-model Article {
-  id        Int       @id @default(autoincrement())
-  title     String
-  content   String
-  authorId  Int
-  createdAt DateTime  @default(now())
-  User      User      @relation(fields: [authorId], references: [id])
-  Comment   Comment[]
-  Like      Like[]
-}
-
-model Like {
-  id        Int     @id @default(autoincrement())
-  userId    Int
-  articleId Int
-  Article   Article @relation(fields: [articleId], references: [id])
-  User      User    @relation(fields: [userId], references: [id])
+model Post {
+  id         String    @id @unique @default(cuid())
+  content    String
+  createdAt  DateTime  @default(now())
+  authorName String
+  authorId   String
+  author     User      @relation("AuthorToPost", fields: [authorId], references: [id])
+  comments   Comment[]
+  likes      User[]    @relation("LikesToPost")
 }
