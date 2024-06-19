@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ConnectionDocument } from "../../gql/graphql";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [connect, { loading, error }] = useMutation(ConnectionDocument);
+
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,6 +17,10 @@ const RegisterPage = () => {
       console.log(data);
       if (data && data.connection && data.connection.token) {
         localStorage.setItem("token", data.connection.token);
+
+        // Redirect to the home page
+
+        navigate("/d");
       }
     } catch (err) {
       // handle error
