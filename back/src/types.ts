@@ -133,7 +133,7 @@ export type RegistrationResponse = {
 export type User = {
   __typename?: 'User';
   id: Scalars['ID']['output'];
-  username: Scalars['String']['output'];
+  name: Scalars['String']['output'];
 };
 
 
@@ -310,7 +310,7 @@ export type RegistrationResponseResolvers<ContextType = Context, ParentType exte
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

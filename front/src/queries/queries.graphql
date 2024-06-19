@@ -1,0 +1,48 @@
+query GetUser {
+  getUser {
+    id
+    username
+  }
+}
+
+query GetPosts {
+  getPosts {
+    id
+    createdAt
+    content
+    authorId
+    authorName
+    likes {
+      id
+      username
+    }
+    comments {
+      id
+      content
+      authorId
+      authorName
+      postId
+    }
+  }
+}
+
+query GetPost($postId: ID!) {
+  getPost(postId: $postId) {
+    id
+    createdAt
+    content
+    authorId
+    authorName
+    likes {
+      id
+      username
+    }
+    comments {
+      id
+      content
+      authorId
+      authorName
+      postId
+    }
+  }
+}

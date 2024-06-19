@@ -1,10 +1,9 @@
 import gql from "graphql-tag";
 
 export const typeDefs = gql`
-
   type User {
     id: ID!
-    username: String!
+    name: String!
   }
 
   type Post {
@@ -29,7 +28,11 @@ export const typeDefs = gql`
     registration(username: String!, password: String!): RegistrationResponse!
     connection(username: String!, password: String!): ConnectionResponse!
     createPost(token: String!, content: String!): CreatePostResponse!
-    createComment(token: String!, text: String!, postId: ID!): CreateCommentResponse!
+    createComment(
+      token: String!
+      text: String!
+      postId: ID!
+    ): CreateCommentResponse!
     likePost(token: String!, postId: ID!): CreatePostResponse!
     deletePost(token: String!, postId: ID!): CreatePostResponse!
   }
@@ -64,7 +67,7 @@ export const typeDefs = gql`
     comment: Comment
   }
 
-    type Query {
+  type Query {
     getUser: [User]!
     getPosts: [Post]!
     getPost(postId: ID!): Post!
