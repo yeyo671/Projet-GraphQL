@@ -1,0 +1,50 @@
+mutation Registration($username: String!, $password: String!) {
+  registration(username: $username, password: $password) {
+    code
+    message
+    success
+    user {
+      id
+      username
+    }
+  }
+}
+
+mutation Connection($username: String!, $password: String!) {
+  connection(username: $username, password: $password) {
+    code
+    message
+    success
+    token
+    user {
+      id
+      username
+    }
+  }
+}
+
+mutation CreatePost($token: String!, $content: String!) {
+  createPost(token: $token, content: $content) {
+    code
+    message
+    success
+    post {
+      id
+      content
+      authorId
+      authorName
+      createdAt
+      likes {
+        id
+        username
+      }
+      comments {
+        id
+        content
+        authorId
+        authorName
+        postId
+      }
+    }
+  }
+}

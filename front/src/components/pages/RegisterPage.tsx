@@ -1,93 +1,47 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { ConnectionDocument } from "../../gql/graphql";
 
-export default function RegisterPage() {
-  const [activeTab, setActiveTab] = useState("register");
+const RegisterPage = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [connect, { loading, error }] = useMutation(ConnectionDocument);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const { data } = await connect({ variables: { username, password } });
+      console.log(data);
+    } catch (err) {
+      // handle error
+    }
+  };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96">
-        <div className="mb-4">
-          <div className="flex justify-center mb-6">
-            <button
-              className={`px-4 py-2 font-bold ${
-                activeTab === "register"
-                  ? "border-b-2 border-blue-500"
-                  : "text-gray-500"
-              }`}
-              onClick={() => setActiveTab("register")}
-            >
-              Register
-            </button>
-            <button
-              className={`px-4 py-2 font-bold ml-4 ${
-                activeTab === "login"
-                  ? "border-b-2 border-blue-500"
-                  : "text-gray-500"
-              }`}
-              onClick={() => setActiveTab("login")}
-            >
-              Login
-            </button>
-          </div>
-          {activeTab === "register" ? (
-            <>
-              <h1 className="text-2xl font-bold mb-4 text-center">Register</h1>
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Username
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="username"
-                type="text"
-                placeholder="Username"
-              />
-
-              <label className="block text-gray-700 text-sm font-bold mb-2 mt-4">
-                Email
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="email"
-                type="email"
-                placeholder="Email"
-              />
-
-              <label className="block text-gray-700 text-sm font-bold mb-2 mt-4">
-                Password
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="password"
-                type="password"
-                placeholder="Password"
-              />
-            </>
-          ) : (
-            <>
-              <h1 className="text-2xl font-bold mb-4 text-center">Login</h1>
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Email
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="login-email"
-                type="email"
-                placeholder="Email"
-              />
-
-              <label className="block text-gray-700 text-sm font-bold mb-2 mt-4">
-                Password
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="login-password"
-                type="password"
-                placeholder="Password"
-              />
-            </>
-          )}
-        </div>
-      </div>
+    <div>
+      <form onSubmit={handleLogin}>
+        <label>
+          Username
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </label>
+        <label>
+          Password
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+        <button type="submit">Login</button>
+      </form>
+      {loading && <p>Loading...</p>}
+      {error && <p>Error :( Please try again</p>}
     </div>
   );
-}
+};
+
+export default RegisterPage;
