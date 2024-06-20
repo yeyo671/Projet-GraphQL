@@ -39,7 +39,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ post }) => {
       className="flex items-center justify-center"
     >
       {userHasLiked ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
-      {post.likes.length > 0 && ` (${post.likes.length})`}
+      {<span className="ml-2">{post.likes.length}</span>}
     </button>
   );
 };
