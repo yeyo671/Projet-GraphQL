@@ -3,17 +3,17 @@ import { LikePostDocument } from "../../gql/graphql";
 import { GetPostQuery } from "../../gql/graphql";
 
 interface LikeButtonProps {
-  postId: GetPostQuery["getPost"]["id"];
+  post: GetPostQuery["getPost"];
 }
 
-const LikeButton: React.FC<LikeButtonProps> = ({ postId }) => {
+const LikeButton: React.FC<LikeButtonProps> = ({ post }) => {
   const [likePost, { loading, error }] = useMutation(LikePostDocument);
 
   const handleLike = async () => {
     try {
       await likePost({
         variables: {
-          postId,
+          postId: post.id,
           token: localStorage.getItem("token") ?? "",
         },
       });
@@ -25,6 +25,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ postId }) => {
   return (
     <button onClick={handleLike} disabled={loading}>
       {loading ? "Liking..." : "Like"}
+      {post.likes.length > 0 && ` (${post.likes.length})`}
     </button>
   );
 };
