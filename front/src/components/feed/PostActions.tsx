@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
-import { LikePostDocument } from "../../gql/graphql";
-import { GetPostQuery } from "../../gql/graphql";
+import { LikePostDocument, GetPostQuery } from "../../gql/graphql";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 interface LikeButtonProps {
   post: GetPostQuery["getPost"];
@@ -8,6 +8,8 @@ interface LikeButtonProps {
 
 const LikeButton: React.FC<LikeButtonProps> = ({ post }) => {
   const [likePost, { loading, error }] = useMutation(LikePostDocument);
+
+  const currentUser = localStorage.getItem("username");
 
   const handleLike = async () => {
     try {
@@ -22,13 +24,21 @@ const LikeButton: React.FC<LikeButtonProps> = ({ post }) => {
     }
   };
 
+  const userHasLiked = post.likes.some(
+    (like) => like?.username === currentUser
+  );
+
   if (error) {
     return <p>Error occurred: {error.message}</p>;
   }
 
   return (
-    <button onClick={handleLike} disabled={loading}>
-      {loading ? "Liking..." : "Like"}
+    <button
+      onClick={handleLike}
+      disabled={loading}
+      className="flex items-center justify-center"
+    >
+      {userHasLiked ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
       {post.likes.length > 0 && ` (${post.likes.length})`}
     </button>
   );

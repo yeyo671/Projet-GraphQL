@@ -17,6 +17,7 @@ const RegisterPage = () => {
       console.log(data);
       if (data && data.connection && data.connection.token) {
         localStorage.setItem("token", data.connection.token);
+        localStorage.setItem("username", username);
 
         // Redirect to the home page
 
