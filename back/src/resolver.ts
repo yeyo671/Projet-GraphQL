@@ -14,8 +14,8 @@ export const resolvers: Resolvers = {
         const users = await db.user.findMany();
         return users;
       } catch (error) {
-        console.error('Error fetching users:', error);
-        throw new Error('Failed to fetch users');
+        console.error("Error fetching users:", error);
+        throw new Error("Failed to fetch users");
       }
     },
     getPosts: async () => {
@@ -26,15 +26,18 @@ export const resolvers: Resolvers = {
             likes: true,
             comments: true,
           },
+          orderBy: {
+            createdAt: "desc",
+          },
         });
-        return posts.map(post => ({
+        return posts.map((post) => ({
           ...post,
           createdAt: post.createdAt.toISOString(),
           likes: post.likes,
         }));
       } catch (error) {
-        console.error('Error fetching posts:', error);
-        throw new Error('Failed to fetch posts');
+        console.error("Error fetching posts:", error);
+        throw new Error("Failed to fetch posts");
       }
     },
     getPost: async (_: any, { postId }: { postId: string }) => {
@@ -48,7 +51,7 @@ export const resolvers: Resolvers = {
           },
         });
         if (!post) {
-          throw new Error('Post not found');
+          throw new Error("Post not found");
         }
         return {
           ...post,
@@ -56,8 +59,8 @@ export const resolvers: Resolvers = {
           likes: post.likes,
         };
       } catch (error) {
-        console.error('Error fetching post:', error);
-        throw new Error('Failed to fetch post');
+        console.error("Error fetching post:", error);
+        throw new Error("Failed to fetch post");
       }
     },
   },
