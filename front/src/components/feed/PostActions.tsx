@@ -22,6 +22,10 @@ const LikeButton: React.FC<LikeButtonProps> = ({ post }) => {
     }
   };
 
+  if (error) {
+    return <p>Error occurred: {error.message}</p>;
+  }
+
   return (
     <button onClick={handleLike} disabled={loading}>
       {loading ? "Liking..." : "Like"}
