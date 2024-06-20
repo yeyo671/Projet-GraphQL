@@ -1,4 +1,5 @@
 import { GetPostQuery } from "../../gql/graphql";
+import LikeButton from "./PostActions";
 
 interface PostCardProps {
   post: GetPostQuery["getPost"];
@@ -14,6 +15,10 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
       </div>
       <p className="text-gray-500 mb-2">{post.authorName}</p>
       <p className="text-gray-700">{post.content}</p>
+      <div className="flex items-center gap-4 mt-4">
+        <LikeButton postId={post.id} />
+        <button className="btn btn-sm">Comment</button>
+      </div>
     </div>
   );
 };

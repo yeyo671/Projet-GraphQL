@@ -48,3 +48,29 @@ mutation CreatePost($token: String!, $content: String!) {
     }
   }
 }
+
+mutation LikePost($token: String!, $postId: ID!) {
+  likePost(token: $token, postId: $postId) {
+    code
+    message
+    success
+    post {
+      id
+      content
+      authorId
+      authorName
+      createdAt
+      likes {
+        id
+        username
+      }
+      comments {
+        id
+        content
+        authorId
+        authorName
+        postId
+      }
+    }
+  }
+}
