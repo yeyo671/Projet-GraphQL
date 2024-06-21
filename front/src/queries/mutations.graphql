@@ -100,3 +100,11 @@ mutation EditPost($token: String!, $postId: ID!, $newContent: String!) {
     }
   }
 }
+
+mutation DeletePost($token: String!, $postId: ID!) {
+  deletePost(token: $token, postId: $postId) {
+    code
+    message
+    success
+  }
+}

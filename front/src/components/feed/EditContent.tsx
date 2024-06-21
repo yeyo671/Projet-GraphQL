@@ -1,10 +1,11 @@
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import {
   EditPostDocument,
   GetPostDocument,
   GetPostQuery,
 } from "../../gql/graphql";
-import { useState } from "react";
+import UniversalErrorAlert from "../UniversalErrorAlert";
 
 interface EditContentProps {
   post: GetPostQuery["getPost"];
@@ -17,6 +18,9 @@ const EditContent: React.FC<EditContentProps> = ({ post }) => {
     refetchQueries: [
       { query: GetPostDocument, variables: { postId: post.id } },
     ],
+    onError: (error) => {
+      console.error("Mutation error:", error);
+    },
   });
 
   const handleEdit = async () => {
@@ -29,19 +33,18 @@ const EditContent: React.FC<EditContentProps> = ({ post }) => {
             token: localStorage.getItem("token") ?? "",
           },
         });
+        setEditMode(false);
       } catch (err) {
-        console.error(err);
+        console.error("Error caught in handleEdit:", err);
       }
+    } else {
+      setEditMode(true);
     }
-    setEditMode(!editMode);
   };
-
-  if (error) {
-    return <p>Error occurred: {error.message}</p>;
-  }
 
   return (
     <div>
+      {error && <UniversalErrorAlert message={error.message} />}
       {editMode ? (
         <input
           type="text"

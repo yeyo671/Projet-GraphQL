@@ -1,44 +1,32 @@
-import { getUser } from "../../modules/auth.js";
 import { MutationResolvers } from "../../types.js";
+import {
+  AuthenticationError,
+  UserInputError,
+  ForbiddenError,
+} from "apollo-server-errors";
 
 export const editPost: MutationResolvers["editPost"] = async (
   _,
   { token, postId, newContent },
-  { dataSources }
+  { dataSources, user }
 ) => {
   if (!token || !postId || !newContent) {
-    return {
-      code: 400,
-      message: "Token, postId, and newContent are required",
-      success: false,
-      post: null,
-    };
+    throw new UserInputError("Token, postId, and newContent are required");
+  }
+
+  if (!user) {
+    throw new AuthenticationError("User not authenticated");
+  }
+
+  const post = await dataSources.db.post.findUnique({
+    where: { id: postId },
+  });
+
+  if (!post || post.authorId !== user.id) {
+    throw new ForbiddenError("Post not found or user not authorized");
   }
 
   try {
-    const user = getUser(token);
-    if (!user) {
-      return {
-        code: 403,
-        message: "User not authenticated",
-        success: false,
-        post: null,
-      };
-    }
-
-    const post = await dataSources.db.post.findUnique({
-      where: { id: postId },
-    });
-
-    if (!post || post.authorId !== user.id) {
-      return {
-        code: 404,
-        message: "Post not found or user not authorized",
-        success: false,
-        post: null,
-      };
-    }
-
     const updatedPost = await dataSources.db.post.update({
       where: { id: postId },
       data: { content: newContent },
@@ -58,12 +46,6 @@ export const editPost: MutationResolvers["editPost"] = async (
     };
   } catch (e) {
     console.error("Error updating post:", e);
-
-    return {
-      code: 500,
-      message: "Internal server error",
-      success: false,
-      post: null,
-    };
+    throw new Error("Internal server error");
   }
 };

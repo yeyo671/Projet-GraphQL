@@ -1,3 +1,8 @@
+import {
+  AuthenticationError,
+  UserInputError,
+  ApolloError,
+} from "apollo-server-errors";
 import { comparePassword, createJWT } from "../../modules/auth.js";
 import { MutationResolvers } from "../../types.js";
 
@@ -6,38 +11,20 @@ export const connection: MutationResolvers["connection"] = async (
   { password, username },
   { dataSources }
 ) => {
+  // Check for missing username or password
   if (!username || !password) {
-    return {
-      code: 400,
-      message: "Username and password are required",
-      success: false,
-      token: null,
-    };
+    throw new UserInputError("Username and password are required");
   }
 
   try {
     const user = await dataSources.db.user.findUnique({ where: { username } });
     if (!user) {
-      console.error("User not found:", username);
-      return {
-        code: 404,
-        message: "User not found",
-        success: false,
-        token: null,
-      };
+      throw new AuthenticationError("User not found");
     }
 
     const isValidPassword = await comparePassword(password, user.password);
     if (!isValidPassword) {
-      console.error("Invalid password provided for user:", username);
-      console.error("Provided password:", password || "undefined");
-      console.error("User password:", user.password || "undefined");
-      return {
-        code: 401,
-        message: "Invalid password provided",
-        success: false,
-        token: null,
-      };
+      throw new AuthenticationError("Invalid password provided");
     }
 
     const token = createJWT(user);
@@ -54,12 +41,13 @@ export const connection: MutationResolvers["connection"] = async (
     };
   } catch (e) {
     console.error("Error during sign-in:", e);
-
-    return {
-      code: 500,
-      message: "Internal server error",
-      success: false,
-      token: null,
-    };
+    if (e instanceof AuthenticationError || e instanceof UserInputError) {
+      throw e;
+    } else {
+      throw new ApolloError(
+        "An unexpected error occurred",
+        "INTERNAL_SERVER_ERROR"
+      );
+    }
   }
 };

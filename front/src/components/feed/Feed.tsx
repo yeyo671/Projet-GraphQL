@@ -6,7 +6,7 @@ import { useQuery } from "@apollo/client";
 
 export default function Feed() {
   const { data, loading, error } = useQuery(GetPostsDocument);
-  if (error) return <p>Error :</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <>
