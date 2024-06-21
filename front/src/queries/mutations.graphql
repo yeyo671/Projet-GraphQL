@@ -74,3 +74,29 @@ mutation LikePost($token: String!, $postId: ID!) {
     }
   }
 }
+
+mutation EditPost($token: String!, $postId: ID!, $newContent: String!) {
+  editPost(token: $token, postId: $postId, newContent: $newContent) {
+    code
+    message
+    success
+    post {
+      id
+      content
+      authorId
+      authorName
+      createdAt
+      likes {
+        id
+        username
+      }
+      comments {
+        id
+        content
+        authorId
+        authorName
+        postId
+      }
+    }
+  }
+}

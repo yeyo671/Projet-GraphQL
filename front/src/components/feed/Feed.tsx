@@ -1,4 +1,4 @@
-import CommentForm from "./CommentForm";
+import PostForm from "./PostForm";
 import PostCard from "./PostCard";
 
 import { GetPostsDocument } from "../../gql/graphql";
@@ -12,7 +12,7 @@ export default function Feed() {
     <>
       <div className="container mx-auto pt-4">
         <div className="flex flex-col gap-4">
-          <CommentForm />
+          <PostForm />
           {loading ? (
             <div className="flex justify-center">
               <span className="loading loading-spinner text-primary"></span>

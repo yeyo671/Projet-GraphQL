@@ -58,6 +58,7 @@ export type Mutation = {
   createComment: CreateCommentResponse;
   createPost: CreatePostResponse;
   deletePost: CreatePostResponse;
+  editPost: CreatePostResponse;
   likePost: CreatePostResponse;
   registration: RegistrationResponse;
 };
@@ -83,6 +84,13 @@ export type MutationCreatePostArgs = {
 
 
 export type MutationDeletePostArgs = {
+  postId: Scalars['ID']['input'];
+  token: Scalars['String']['input'];
+};
+
+
+export type MutationEditPostArgs = {
+  newContent: Scalars['String']['input'];
   postId: Scalars['ID']['input'];
   token: Scalars['String']['input'];
 };
@@ -279,6 +287,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   createComment?: Resolver<ResolversTypes['CreateCommentResponse'], ParentType, ContextType, RequireFields<MutationCreateCommentArgs, 'postId' | 'text' | 'token'>>;
   createPost?: Resolver<ResolversTypes['CreatePostResponse'], ParentType, ContextType, RequireFields<MutationCreatePostArgs, 'content' | 'token'>>;
   deletePost?: Resolver<ResolversTypes['CreatePostResponse'], ParentType, ContextType, RequireFields<MutationDeletePostArgs, 'postId' | 'token'>>;
+  editPost?: Resolver<ResolversTypes['CreatePostResponse'], ParentType, ContextType, RequireFields<MutationEditPostArgs, 'newContent' | 'postId' | 'token'>>;
   likePost?: Resolver<ResolversTypes['CreatePostResponse'], ParentType, ContextType, RequireFields<MutationLikePostArgs, 'postId' | 'token'>>;
   registration?: Resolver<ResolversTypes['RegistrationResponse'], ParentType, ContextType, RequireFields<MutationRegistrationArgs, 'password' | 'username'>>;
 };

@@ -35,6 +35,11 @@ export const typeDefs = gql`
     ): CreateCommentResponse!
     likePost(token: String!, postId: ID!): CreatePostResponse!
     deletePost(token: String!, postId: ID!): CreatePostResponse!
+    editPost(
+      token: String!
+      postId: ID!
+      newContent: String!
+    ): CreatePostResponse!
   }
 
   type RegistrationResponse {

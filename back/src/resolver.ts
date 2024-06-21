@@ -5,6 +5,7 @@ import { createPost } from "./mutations/user/createPost.js";
 import { likePost } from "./mutations/user/likePost.js";
 import { createComment } from "./mutations/user/createComment.js";
 import { deletePost } from "./mutations/user/deletePost.js";
+import { editPost } from "./mutations/user/editingPost.js";
 import db from "./datasources/db.js";
 
 export const resolvers: Resolvers = {
@@ -72,5 +73,6 @@ export const resolvers: Resolvers = {
     likePost,
     createComment,
     deletePost,
+    editPost,
   },
 };
