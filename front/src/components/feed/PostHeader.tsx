@@ -3,6 +3,7 @@ import EditContent from "./EditContent";
 import DeleteButton from "./DeleteButton";
 import { GetPostQuery } from "../../gql/graphql";
 import { formatDistance } from "date-fns";
+import { fr } from "date-fns/locale";
 
 interface PostHeaderProps {
   post: GetPostQuery["getPost"];
@@ -11,6 +12,7 @@ interface PostHeaderProps {
 const PostHeader: React.FC<PostHeaderProps> = ({ post }) => {
   const formattedDate = formatDistance(new Date(post.createdAt), new Date(), {
     addSuffix: true,
+    locale: fr,
   });
 
   const currentUser = localStorage.getItem("username");
