@@ -25,16 +25,15 @@ const PostForm = () => {
     }
   };
 
+  const username = localStorage.getItem("username") ?? "";
+
   return (
     <form onSubmit={handleSubmit} className="bg-base-100 rounded-btn p-4">
       <div className="flex flex-col gap-3">
-        <div className="flex justify-between gap-3">
-          <div className="avatar">
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-              />
+        <div className="flex justify-between items-center gap-3">
+          <div className="avatar placeholder">
+            <div className="bg-neutral text-neutral-content rounded-full w-10 h-10">
+              <span className="text-sm">{username[0]?.toUpperCase()}</span>
             </div>
           </div>
           <label className="input input-bordered flex flex-grow items-center gap-2 bg-base-200">

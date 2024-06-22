@@ -14,6 +14,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
       <PostHeader post={post} />
 
       <PostContent />
+
       <LikeButton post={post} />
     </div>
   );
