@@ -45,12 +45,16 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId }) => {
           <input
             type="text"
             className="w-full"
-            placeholder="Write a comment..."
+            placeholder="Ecrire un commentaire..."
             value={comment}
             onChange={(e) => setComment(e.target.value)}
           />
         </label>
-        <button type="submit" className="btn btn-primary" disabled={loading}>
+        <button
+          type="submit"
+          className="btn btn-primary btn-circle"
+          disabled={loading}
+        >
           {loading ? "Posting..." : <VscSend />}
         </button>
       </div>
