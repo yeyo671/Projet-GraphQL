@@ -11,7 +11,7 @@ export default function Feed() {
 
   return (
     <>
-      <div className="container mx-auto max-w-xl pt-4">
+      <div className="container mx-auto max-w-xl py-4 px-3 md:px-0">
         <div className="flex flex-col gap-4">
           <PostForm />
           {loading ? (

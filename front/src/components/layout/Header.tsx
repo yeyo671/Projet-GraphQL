@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <div className="container bg-base-100 mx-auto max-w-xl">
+    <div className="container bg-base-100 mx-auto max-w-xl px-3 md:px-0">
       <div className="navbar px-0">
         <div className="flex-1">
           <a className="text-primary font-semibold select-none text-xl">

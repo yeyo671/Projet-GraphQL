@@ -39,7 +39,7 @@ const PostForm = () => {
           <label className="input input-bordered flex flex-grow items-center gap-2 bg-base-200">
             <input
               type="text"
-              className="grow"
+              className="w-full"
               placeholder="Ecire un post..."
               value={comment}
               onChange={(e) => setComment(e.target.value)}
