@@ -1,11 +1,16 @@
 import { getUser } from "../../modules/auth.js";
 import { MutationResolvers } from "../../types.js";
 
-export const createComment: MutationResolvers['createComment'] = async (_, { token, text, postId }, { dataSources }) => {
-  if (!token || !text || !postId) {
+// Update the parameter name from `text` to `content` to match the frontend
+export const createComment: MutationResolvers["createComment"] = async (
+  _,
+  { token, content, postId },
+  { dataSources }
+) => {
+  if (!token || !content || !postId) {
     return {
       code: 400,
-      message: 'Token, text, and postId are required',
+      message: "Token, content, and postId are required",
       success: false,
       post: null,
       comment: null,
@@ -17,7 +22,7 @@ export const createComment: MutationResolvers['createComment'] = async (_, { tok
     if (!user) {
       return {
         code: 403,
-        message: 'User not authenticated',
+        message: "User not authenticated",
         success: false,
         post: null,
         comment: null,
@@ -26,13 +31,13 @@ export const createComment: MutationResolvers['createComment'] = async (_, { tok
 
     const post = await dataSources.db.post.findUnique({
       where: { id: postId },
-      include: { author: true, comments: true, likes: true }
+      include: { author: true, comments: true, likes: true },
     });
 
     if (!post) {
       return {
         code: 404,
-        message: 'Post not found',
+        message: "Post not found",
         success: false,
         post: null,
         comment: null,
@@ -41,7 +46,7 @@ export const createComment: MutationResolvers['createComment'] = async (_, { tok
 
     const createdComment = await dataSources.db.comment.create({
       data: {
-        content: text,
+        content: content, // Use `content` here instead of `text`
         authorName: user.username,
         authorId: user.id,
         postId: postId,
@@ -50,7 +55,7 @@ export const createComment: MutationResolvers['createComment'] = async (_, { tok
 
     return {
       code: 201,
-      message: 'Comment has been created',
+      message: "Comment has been created",
       success: true,
       post: {
         ...post,
@@ -63,10 +68,10 @@ export const createComment: MutationResolvers['createComment'] = async (_, { tok
       },
     };
   } catch (e) {
-    console.error('Error creating comment:', e);
+    console.error("Error creating comment:", e);
     return {
       code: 500,
-      message: 'Internal server error',
+      message: "Internal server error",
       success: false,
       post: null,
       comment: null,

@@ -1,14 +1,23 @@
+// front/src/components/feed/CommentForm.tsx
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { CreatePostDocument, GetPostsDocument } from "../../gql/graphql";
+import { CreateCommentDocument, GetPostDocument } from "../../gql/graphql";
+import { VscSend } from "react-icons/vsc";
 
-const CommentForm = () => {
+interface CommentFormProps {
+  postId: string;
+}
+
+const CommentForm: React.FC<CommentFormProps> = ({ postId }) => {
   const [comment, setComment] = useState("");
-  const [createComment, { loading, error }] = useMutation(CreatePostDocument, {
-    refetchQueries: [{ query: GetPostsDocument }],
-  });
+  const [createComment, { loading, error }] = useMutation(
+    CreateCommentDocument,
+    {
+      refetchQueries: [{ query: GetPostDocument, variables: { postId } }],
+    }
+  );
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!comment) return;
 
@@ -17,6 +26,7 @@ const CommentForm = () => {
         variables: {
           content: comment,
           token: localStorage.getItem("token") ?? "",
+          postId,
         },
       });
       setComment("");
@@ -26,27 +36,22 @@ const CommentForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-base-100 rounded-btn p-4">
-      <div className="flex justify-between gap-3">
-        <div className="avatar">
-          <div className="w-10 rounded-full">
-            <img
-              alt="Tailwind CSS Navbar component"
-              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-            />
-          </div>
-        </div>
-        <label className="input input-bordered flex flex-grow items-center gap-2">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-base-100 form-control rounded-btn p-4"
+    >
+      <div className="flex flex-row gap-3">
+        <label className="input input-bordered flex flex-grow items-center gap-2 bg-base-200">
           <input
             type="text"
-            className="grow"
+            className="w-full"
             placeholder="Write a comment..."
             value={comment}
             onChange={(e) => setComment(e.target.value)}
           />
         </label>
         <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading ? "Posting..." : "Post"}
+          {loading ? "Posting..." : <VscSend />}
         </button>
       </div>
       {error && <p>Error: {error.message}</p>}

@@ -1,4 +1,5 @@
 import { GetPostQuery } from "../../gql/graphql";
+import CommentForm from "./CommentForm";
 import CommentsDisplay from "./CommentsDisplay";
 import LikeButton from "./PostActions";
 import PostContent from "./PostContent";
@@ -20,6 +21,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
       {post.comments.length > 0 && <div className="divider my-0" />}
 
       <CommentsDisplay comments={post.comments} />
+      <CommentForm postId={post.id} />
     </div>
   );
 };

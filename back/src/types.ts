@@ -71,8 +71,8 @@ export type MutationConnectionArgs = {
 
 
 export type MutationCreateCommentArgs = {
+  content: Scalars['String']['input'];
   postId: Scalars['ID']['input'];
-  text: Scalars['String']['input'];
   token: Scalars['String']['input'];
 };
 
@@ -284,7 +284,7 @@ export type CreatePostResponseResolvers<ContextType = Context, ParentType extend
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   connection?: Resolver<ResolversTypes['ConnectionResponse'], ParentType, ContextType, RequireFields<MutationConnectionArgs, 'password' | 'username'>>;
-  createComment?: Resolver<ResolversTypes['CreateCommentResponse'], ParentType, ContextType, RequireFields<MutationCreateCommentArgs, 'postId' | 'text' | 'token'>>;
+  createComment?: Resolver<ResolversTypes['CreateCommentResponse'], ParentType, ContextType, RequireFields<MutationCreateCommentArgs, 'content' | 'postId' | 'token'>>;
   createPost?: Resolver<ResolversTypes['CreatePostResponse'], ParentType, ContextType, RequireFields<MutationCreatePostArgs, 'content' | 'token'>>;
   deletePost?: Resolver<ResolversTypes['CreatePostResponse'], ParentType, ContextType, RequireFields<MutationDeletePostArgs, 'postId' | 'token'>>;
   editPost?: Resolver<ResolversTypes['CreatePostResponse'], ParentType, ContextType, RequireFields<MutationEditPostArgs, 'newContent' | 'postId' | 'token'>>;

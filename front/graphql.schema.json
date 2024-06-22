@@ -425,14 +425,14 @@
             "description": null,
             "args": [
               {
-                "name": "postId",
+                "name": "content",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
                     "kind": "SCALAR",
-                    "name": "ID",
+                    "name": "String",
                     "ofType": null
                   }
                 },
@@ -441,14 +441,14 @@
                 "deprecationReason": null
               },
               {
-                "name": "text",
+                "name": "postId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
                     "kind": "SCALAR",
-                    "name": "String",
+                    "name": "ID",
                     "ofType": null
                   }
                 },

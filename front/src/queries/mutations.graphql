@@ -108,3 +108,18 @@ mutation DeletePost($token: String!, $postId: ID!) {
     success
   }
 }
+
+mutation CreateComment($token: String!, $postId: ID!, $content: String!) {
+  createComment(token: $token, postId: $postId, content: $content) {
+    code
+    message
+    success
+    comment {
+      id
+      content
+      authorId
+      authorName
+      postId
+    }
+  }
+}
