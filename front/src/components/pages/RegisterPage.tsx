@@ -57,7 +57,7 @@ const LoginPage = () => {
         </button>
       </form>
       {loading && <p>Loading...</p>}
-      {error && <UniversalErrorAlert message={error.message} />}
+      {error && <UniversalErrorAlert error={error} />}
     </div>
   );
 };

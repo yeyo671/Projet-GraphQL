@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { ApolloError } from "@apollo/client";
 
 interface UniversalErrorAlertProps {
-  message?: string;
+  error?: ApolloError;
 }
 
-const UniversalErrorAlert: React.FC<UniversalErrorAlertProps> = ({
-  message,
-}) => {
+const UniversalErrorAlert: React.FC<UniversalErrorAlertProps> = ({ error }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -17,7 +16,26 @@ const UniversalErrorAlert: React.FC<UniversalErrorAlertProps> = ({
     return () => clearTimeout(timer);
   }, []);
 
-  if (!isVisible) return null;
+  if (!isVisible || !error) return null;
+
+  const message = error.message;
+
+  const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
+
+  const getErrorMessage = () => {
+    switch (errorCode) {
+      case "BAD_USER_INPUT":
+        return "Please check your input and try again.";
+      case "UNAUTHENTICATED":
+        return "You need to be logged in to perform this action.";
+      case "FORBIDDEN":
+        return "You are not authorized to perform this action.";
+      case "NOT_FOUND":
+        return "The requested resource was not found.";
+      default:
+        return message || "An unexpected error occurred. Please try again.";
+    }
+  };
 
   return (
     <div role="alert" className="alert alert-error">
@@ -34,7 +52,7 @@ const UniversalErrorAlert: React.FC<UniversalErrorAlertProps> = ({
           d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
         />
       </svg>
-      <span>{message || "Error! Task failed successfully."}</span>
+      <span>{getErrorMessage()}</span>
     </div>
   );
 };

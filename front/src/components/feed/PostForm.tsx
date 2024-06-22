@@ -27,26 +27,28 @@ const PostForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="bg-base-100 rounded-btn p-4">
-      <div className="flex justify-between gap-3">
-        <div className="avatar">
-          <div className="w-10 rounded-full">
-            <img
-              alt="Tailwind CSS Navbar component"
-              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-            />
+      <div className="flex flex-col gap-3">
+        <div className="flex justify-between gap-3">
+          <div className="avatar">
+            <div className="w-10 rounded-full">
+              <img
+                alt="Tailwind CSS Navbar component"
+                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+              />
+            </div>
           </div>
+          <label className="input input-bordered flex flex-grow items-center gap-2">
+            <input
+              type="text"
+              className="grow"
+              placeholder="Ecire un post..."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+          </label>
         </div>
-        <label className="input input-bordered flex flex-grow items-center gap-2">
-          <input
-            type="text"
-            className="grow"
-            placeholder="Write a comment..."
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-          />
-        </label>
         <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading ? "Posting..." : "Post"}
+          {loading ? "Posting..." : "Publier"}
         </button>
       </div>
       {error && <p>Error: {error.message}</p>}

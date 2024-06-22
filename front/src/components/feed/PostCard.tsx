@@ -1,8 +1,8 @@
 import { GetPostQuery } from "../../gql/graphql";
-import DeleteButton from "./DeleteButton";
-import EditContent from "./EditContent";
 import LikeButton from "./PostActions";
 import PostContent from "./PostContent";
+
+import PostHeader from "./PostHeader";
 
 interface PostCardProps {
   post: GetPostQuery["getPost"];
@@ -11,18 +11,10 @@ interface PostCardProps {
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
   return (
     <div className="bg-base-100 rounded-btn p-4">
-      <div className="avatar placeholder">
-        <div className="bg-neutral text-neutral-content rounded-full w-10">
-          <span className="text-sm">{post.authorName[0].toUpperCase()}</span>
-        </div>
-      </div>
-      <p className="text-gray-500 mb-2">{post.authorName}</p>
-      <PostContent post={post} />
-      <EditContent post={post} />
-      <DeleteButton postId={post.id} />
-      <div className="flex items-center">
-        <LikeButton post={post} />
-      </div>
+      <PostHeader post={post} />
+
+      <PostContent />
+      <LikeButton post={post} />
     </div>
   );
 };

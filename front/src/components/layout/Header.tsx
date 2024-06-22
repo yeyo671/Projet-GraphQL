@@ -1,9 +1,11 @@
 export default function Header() {
   return (
-    <div className="container bg-base-100 mx-auto">
-      <div className="navbar">
+    <div className="container bg-base-100 mx-auto max-w-xl">
+      <div className="navbar px-0">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl">daisyUI</a>
+          <a className="text-primary font-semibold select-none text-xl">
+            thefacebook
+          </a>
         </div>
         <div className="flex-none">
           <div className="dropdown dropdown-end">

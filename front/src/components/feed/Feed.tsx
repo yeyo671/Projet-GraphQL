@@ -3,6 +3,7 @@ import PostCard from "./PostCard";
 
 import { GetPostsDocument } from "../../gql/graphql";
 import { useQuery } from "@apollo/client";
+import { EditPostProvider } from "../../contexts/EditPostContext";
 
 export default function Feed() {
   const { data, loading, error } = useQuery(GetPostsDocument);
@@ -10,7 +11,7 @@ export default function Feed() {
 
   return (
     <>
-      <div className="container mx-auto pt-4">
+      <div className="container mx-auto max-w-xl pt-4">
         <div className="flex flex-col gap-4">
           <PostForm />
           {loading ? (
@@ -19,7 +20,12 @@ export default function Feed() {
             </div>
           ) : (
             data?.getPosts.map(
-              (post) => post && <PostCard key={post.id} post={post} />
+              (post) =>
+                post && (
+                  <EditPostProvider key={post.id} post={post}>
+                    <PostCard post={post} />
+                  </EditPostProvider>
+                )
             )
           )}
         </div>

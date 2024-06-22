@@ -1,6 +1,7 @@
-// Import necessary hooks and types from Apollo and your GraphQL file
 import { useMutation } from "@apollo/client";
 import { DeletePostDocument, GetPostsDocument } from "../../gql/graphql";
+import UniversalErrorAlert from "../UniversalErrorAlert";
+import { FiTrash } from "react-icons/fi";
 
 interface DeleteButtonProps {
   postId: string;
@@ -26,9 +27,23 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ postId }) => {
   };
 
   return (
-    <button onClick={handleDelete} disabled={loading} className="btn btn-error">
-      {loading ? "Deleting..." : "Delete"}
-    </button>
+    <div>
+      {error && <UniversalErrorAlert error={error} />}
+      {/* Display the error alert if there's an error */}
+      <button
+        onClick={handleDelete}
+        disabled={loading}
+        className="btn btn-circle btn-ghost"
+      >
+        {loading ? (
+          <span>
+            <i className="fas fa-spinner fa-spin"></i> Deleting...
+          </span>
+        ) : (
+          <FiTrash />
+        )}
+      </button>
+    </div>
   );
 };
 
