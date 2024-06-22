@@ -1,7 +1,7 @@
 import { GetPostQuery } from "../../gql/graphql";
+import CommentsDisplay from "./CommentsDisplay";
 import LikeButton from "./PostActions";
 import PostContent from "./PostContent";
-
 import PostHeader from "./PostHeader";
 
 interface PostCardProps {
@@ -16,6 +16,10 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
       <PostContent />
 
       <LikeButton post={post} />
+
+      {post.comments.length > 0 && <div className="divider my-0" />}
+
+      <CommentsDisplay comments={post.comments} />
     </div>
   );
 };
