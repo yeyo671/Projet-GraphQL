@@ -36,10 +36,10 @@ const LikeButton: React.FC<LikeButtonProps> = ({ post }) => {
     <button
       onClick={handleLike}
       disabled={loading}
-      className="flex items-center justify-center"
+      className="flex items-center justify-center text-neutral-400"
     >
       {userHasLiked ? <FaHeart className="text-primary" /> : <FaRegHeart />}
-      {<span className="ml-2">{post.likes.length}</span>}
+      {<span className="ml-2 text-sm">{post.likes.length}</span>}
     </button>
   );
 };

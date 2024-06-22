@@ -28,7 +28,9 @@ const PostHeader: React.FC<PostHeaderProps> = ({ post }) => {
         </div>
         <div>
           <div className="post-author">{post.authorName}</div>
-          <div className="post-date text-xs text-gray-500">{formattedDate}</div>
+          <div className="post-date text-xs text-neutral-400">
+            {formattedDate}
+          </div>
         </div>
       </div>
       {isMyPost && (
