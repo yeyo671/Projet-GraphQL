@@ -22,7 +22,7 @@ const LoginPage = () => {
       if (data && data.connection && data.connection.token) {
         localStorage.setItem("token", data.connection.token);
         localStorage.setItem("username", username);
-        navigate("/dashboard");
+        navigate("/");
       } else {
         alert("Login failed. Please try again.");
       }
