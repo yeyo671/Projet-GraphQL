@@ -66,7 +66,7 @@ Ce projet mettra en pratique l'utilisation des queries, mutations, et l'intégra
 
 3. Démarrez le serveur :
     ```bash
-    npm run build
+    npm run dev
     ```
     
 4. Ouvrir un navigateur et accedez à l'adresse
