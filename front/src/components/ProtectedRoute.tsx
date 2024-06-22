@@ -1,12 +1,11 @@
 import { Navigate } from "react-router-dom";
+import { ReactNode } from "react";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const token = localStorage.getItem("token");
   const username = localStorage.getItem("username");
 
-  // Check if token and username exist
   if (!token || !username) {
-    // Redirect to login if either token or username are missing
     return <Navigate to="/login" replace />;
   }
 
