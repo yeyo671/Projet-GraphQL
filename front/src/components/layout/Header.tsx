@@ -8,15 +8,15 @@ export default function Header() {
   const handleLogout = () => {
     localStorage.removeItem("username");
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/connection");
   };
 
   return (
     <div className="container bg-base-100 mx-auto max-w-xl px-3 md:px-0">
       <div className="navbar flex justify-between px-0">
-        <a className="text-primary font-semibold select-none text-xl">
+        <h1 className="text-primary font-semibold select-none text-xl">
           thefacebook
-        </a>
+        </h1>
         <div className="flex gap-1">
           <button
             onClick={handleLogout}

@@ -1,14 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/layout/Header";
 import HomePage from "./components/pages/HomePage";
-import RegisterPage from "./components/pages/RegisterPage";
+import AuthPage from "./components/pages/AuthPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<RegisterPage />} />
+        <Route path="/connection" element={<AuthPage />} />
         <Route
           path="/"
           element={
