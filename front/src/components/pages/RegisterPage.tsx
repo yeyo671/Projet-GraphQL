@@ -21,6 +21,7 @@ const LoginPage = () => {
       const { data } = await connect({ variables: { username, password } });
       if (data && data.connection && data.connection.token) {
         localStorage.setItem("token", data.connection.token);
+        localStorage.setItem("username", username);
         navigate("/dashboard");
       } else {
         alert("Login failed. Please try again.");
