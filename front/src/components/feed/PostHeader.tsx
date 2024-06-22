@@ -18,7 +18,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({ post }) => {
 
   return (
     <div className="post-header flex justify-between">
-      <div className="flex flex-row">
+      <div className="flex flex-row gap-2 items-center">
         <div className="avatar placeholder">
           <div className="bg-neutral text-neutral-content rounded-full w-10 h-10">
             <span className="text-sm">{post.authorName[0].toUpperCase()}</span>
@@ -26,7 +26,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({ post }) => {
         </div>
         <div>
           <div className="post-author">{post.authorName}</div>
-          <div className="post-date text-sm text-gray-500">{formattedDate}</div>
+          <div className="post-date text-xs text-gray-500">{formattedDate}</div>
         </div>
       </div>
       {isMyPost && (

@@ -7,26 +7,26 @@ const PostContent: React.FC = () => {
     useEditPost();
 
   return (
-    <div>
+    <div className="flex flex-col gap-1 my-2">
       {error && <UniversalErrorAlert error={error} />}
       {editMode ? (
-        <>
+        <div className="flex flex-col gap-2">
           <input
             type="text"
             value={newContent}
             onChange={(e) => setNewContent(e.target.value)}
-            className="form-input"
+            className="input input-bordered flex flex-grow items-center gap-2 bg-base-200"
           />
           <button
             onClick={handleEdit}
             disabled={loading}
-            className="btn btn-primary mt-2"
+            className="btn btn-sm btn-primary w-fit"
           >
             {loading ? "Saving..." : "Save"}
           </button>
-        </>
+        </div>
       ) : (
-        <p className="text-gray-700 mb-2">{newContent}</p>
+        <p className="text-gray-700">{newContent}</p>
       )}
     </div>
   );

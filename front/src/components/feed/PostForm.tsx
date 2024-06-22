@@ -37,7 +37,7 @@ const PostForm = () => {
               />
             </div>
           </div>
-          <label className="input input-bordered flex flex-grow items-center gap-2">
+          <label className="input input-bordered flex flex-grow items-center gap-2 bg-base-200">
             <input
               type="text"
               className="grow"
